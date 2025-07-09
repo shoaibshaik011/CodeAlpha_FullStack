@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 700px; margin: auto; padding: 20px;">
+  <h2>🔔 Notifications</h2>
+
+  {% if notifications %}
+    <ul style="list-style: none; padding: 0;">
+      {% for n in notifications %}
+        <li style="padding: 12px; margin-bottom: 10px; background: #fff8ff; border-radius: 8px;">
+          {% if n.type == 'follow' %}
+            <strong>{{ n.actor.username }}</strong> started following you.
+          {% elif n.type == 'like' %}
+            <strong>{{ n.actor.username }}</strong> liked your <a href="{% url 'post_detail' n.post.id %}">post</a>.
+          {% elif n.type == 'comment' %}
+            <strong>{{ n.actor.username }}</strong> commented on your <a href="{% url 'post_detail' n.post.id %}">post</a>.
+          {% endif %}
+          <br>
+          <small style="color: #777;">{{ n.created_at|timesince }} ago</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No notifications yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

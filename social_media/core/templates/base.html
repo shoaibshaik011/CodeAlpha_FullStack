@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Flutterly 🦋{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <script src="{% static 'core/feed.js' %}" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'home' %}" class="logo">
+                🦋 <span class="brand-name">Flutterly</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <!-- Search -->
+                <form action="{% url 'user_list' %}" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="Search users...">
+                    <button type="submit">🔍</button>
+                </form>
+                <a href="{% url 'feed' %}" title="Feed">📰</a>
+                <a href="{% url 'create_post' %}" title="New Post">➕</a>
+                <a href="{% url 'notifications' %}" class="notification-icon" title="Notifications">
+                   🔔
+                    {% if notification_count > 0 %}
+                      <span class="notification-badge">{{ notification_count }}</span>
+                    {% endif %}
+                </a>
+
+                <div class="profile-dropdown">
+                    <button onclick="toggleProfileMenu()" class="profile-btn" title="Profile">👤</button>
+                    <div id="profile-menu" class="dropdown-menu">
+                        <a href="{% url 'profile' username=user.username %}">My Profile</a>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-option">Logout 🚪</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,515 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #fef9ff, #f1f4ff);
+  color: #333;
+  min-height: 100vh;
+}
+
+a {
+  color: #5c6ac4;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3c3fa3;
+}
+
+.navbar {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.navbar a {
+  margin-left: 15px;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar a:hover {
+  transform: scale(1.05);
+}
+
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.btn, button {
+  background: linear-gradient(to right, #89f7fe, #d8b4fe);
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover, button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.post-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(173, 173, 255, 0.1);
+  position: relative;
+  transition: transform 0.2s;
+}
+.post-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  margin-top: 10px;
+  color: #555;
+}
+.post-meta i {
+  margin-right: 5px;
+}
+
+.post-box:hover {
+  transform: scale(1.01);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #c8a2c8;
+}
+
+.menu-toggle {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu {
+  z-index: 99;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Butterfly flutter animation */
+.butterfly-icon {
+  display: inline-block;
+  animation: flutter 2s infinite ease-in-out;
+}
+
+@keyframes flutter {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(-5deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(3px) rotate(5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.messages {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.message.success {
+  background-color: #e0ffe0;
+  color: #2e7d32;
+}
+
+.message.error {
+  background-color: #ffd6d6;
+  color: #b00020;
+}
+
+/* Loading spinner */
+.loading-butterfly {
+  width: 50px;
+  height: 50px;
+  animation: flutter 1.5s infinite ease-in-out;
+  display: block;
+  margin: 40px auto;
+}
+
+/* ❤️ Flutter Animation on Like */
+.like-btn {
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.like-btn:active {
+  animation: pop 0.3s ease forwards;
+}
+.like-btn:hover {
+  transform: scale(1.1);
+  color: #ff1493;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5) rotate(-10deg); }
+  100% { transform: scale(1); }
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  color: #5a2d82;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logo:hover {
+  color: #9b59b6;
+  transition: 0.3s;
+}
+
+.brand-name {
+  margin-left: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.nav-right a, .nav-right button {
+  margin-left: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+}
+
+.nav-right a:hover, .nav-right button:hover {
+  color: #8a2be2;
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+.search-form {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.search-form input {
+  padding: 6px;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.search-form button {
+  padding: 6px;
+  border-radius: 0 6px 6px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-btn {
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: white;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-in-out;
+  padding: 8px 0;
+  top: 100%;
+  margin-top: 8px;
+}
+
+.dropdown-menu a, .dropdown-menu button.logout-option {
+  display: block;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover, .dropdown-menu button.logout-option:hover {
+  background-color: #f0f0ff;
+  color: #5c6ac4;
+}
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.post-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-circle {
+  background: #d6bcfa;
+  color: white;
+  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.post-caption {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  font-size: 14px;
+  color: #777;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comment-form {
+  margin-top: 20px;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 12px;
+}
+.comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+.comment-form button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: linear-gradient(to right, #88b8f0, #d1a5f9);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.comments {
+  margin-top: 15px;
+  background: #f8f8ff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.follow-btn {
+  background: #d8b4fe;
+  font-size: 14px;
+  padding: 6px 12px;
+}
+/* 🌸 Login Page Flutterly Theme */
+.login-container {
+  background: white;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+  position: relative;
+}
+
+.login-container h2 {
+  margin-bottom: 10px;
+  color: #5a2d82;
+}
+
+.login-container p {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.login-container form {
+  margin-top: 20px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-footer a {
+  color: #8b5cf6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.butterfly {
+  width: 60px;
+  height: 60px;
+  background: url("/static/core/butterfly-icon.png") no-repeat center;
+  background-size: contain;
+  animation: flutter 4s infinite ease-in-out;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.post-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dots-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  color: #000;
+  transition: background-color 0.2s ease;
+}
+
+.dots-button:hover {
+  background-color: #f3f3ff;
+}
+
+.delete-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 5px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  z-index: 100;
+  min-width: 120px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #d9534f;
+  padding: 10px 16px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #fdf2f2;
+}
+
+.notification-icon {
+  position: relative;
+  font-size: 20px;
+  margin-left: 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Your Feed{% endblock %}
+{% block content %}
+
+<h2 style="text-align: center; margin-bottom: 30px;">Your Feed 📰</h2>
+
+<div class="feed-container">
+  {% if posts %}
+    {% for post in posts %}
+      <div class="post-card" style="transition: 0.3s; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-radius: 12px; padding: 15px; margin-bottom: 30px; background: white;">
+        <!-- Header: Avatar, Username, Follow/Unfollow -->
+        <div class="post-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div class="user-info" style="display: flex; align-items: center; gap: 10px;">
+            <div class="avatar-circle" style="width: 40px; height: 40px; border-radius: 50%; background: #d3bdfc; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+              {{ post.user.username|first|upper }}
+            </div>
+            <strong>{{ post.user.username }}</strong>
+          </div>
+
+          {% if user != post.user %}
+            <form method="post" action="{% url 'toggle_follow' post.user.username %}">
+              {% csrf_token %}
+              <button type="submit" class="btn follow-btn" style="background: #b38dfc; color: white; border: none; padding: 5px 12px; border-radius: 8px; cursor: pointer;">{% if post.is_following %}Unfollow{% else %}Follow{% endif %}</button>
+            </form>
+          {% endif %}
+        </div>
+
+        <!-- Image -->
+        {% if post.image %}
+          <img src="{{ post.image.url }}" class="post-img" alt="Post Image" style="width: 100%; border-radius: 12px; margin-bottom: 10px;">
+        {% endif %}
+
+        <!-- Caption -->
+        <p class="post-caption" style="margin-bottom: 10px;">{{ post.caption }}</p>
+
+        <!-- Footer: Like, Comment, Timestamp -->
+        <div class="post-meta" style="display: flex; justify-content: space-between; font-size: 14px; color: #666; margin-bottom: 10px;">
+          <div>
+            <form method="post" action="{% url 'toggle_like' post.id %}" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="like-btn" style="background: none; border: none; cursor: pointer; color: #e91e63; font-size: 16px;">
+                {% if post.is_liked %}❤️{% else %}🤍{% endif %}
+              </button>
+            </form>
+            <span style="margin-left: 8px;">{{ post.all_likes.count }} likes</span>
+            <span style="margin-left: 16px;">💬 {{ post.all_comments.count }} comments</span>
+          </div>
+          <div>
+            🕒 {{ post.created_at|date:"F d, Y H:i" }}
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="comments" style="margin-top: 10px;">
+          {% for comment in post.comments %}
+            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+          {% empty %}
+            <p style="color: #aaa;">No comments yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Comment Form -->
+        <form method="post" action="{% url 'add_comment' post.id %}" class="comment-form" style="background: #fafafa; border: 1px solid #ccc; border-radius: 12px; padding: 10px; margin-top: 15px;">
+          {% csrf_token %}
+          {{ post.comment_form }}
+          <button type="submit" style="margin-top: 8px; padding: 6px 16px; border-radius: 20px; background: linear-gradient(to right, #7aa7e9, #c189f6); color: white; border: none; cursor: pointer;">Add Comment</button>Add Comment</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align: center;">No posts from users you follow yet.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

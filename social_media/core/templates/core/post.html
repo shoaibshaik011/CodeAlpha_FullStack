@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Create New Post - Flutterly{% endblock %}
+
+{% block content %}
+<div class="container post-box" style="max-width: 500px; margin: 40px auto;">
+  <h2 style="color:#5a2d82; text-align: center; margin-bottom: 20px;">Create a New Post</h2>
+  
+  <form method="post" enctype="multipart/form-data" id="post-form">
+    {% csrf_token %}
+    <div style="margin-bottom: 15px;">
+      <label for="id_image" style="font-weight: bold; display: block; margin-bottom: 5px;">Upload Image</label>
+      <input type="file" name="image" id="id_image" accept="image/*" required style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="id_caption" style="font-weight: bold; display: block; margin-bottom: 5px;">Caption</label>
+      <textarea name="caption" id="id_caption" rows="4" placeholder="Write something..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+    </div>
+
+    <button type="submit" class="btn" style="width: 100%; padding: 12px; font-size: 16px;">Post</button>
+  </form>
+
+  <div id="preview" style="margin-top: 20px; text-align: center;"></div>
+</div>
+
+<script>
+  const imageInput = document.getElementById('id_image');
+  const preview = document.getElementById('preview');
+
+  imageInput.addEventListener('change', () => {
+    preview.innerHTML = ''; 
+    if (imageInput.files.length > 0) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(imageInput.files[0]);
+      img.style.maxWidth = '100%';
+      img.style.borderRadius = '12px';
+      img.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+      preview.appendChild(img);
+    }
+  });
+</script>
+{% endblock %}

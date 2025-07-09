@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Home - Social Feed{% endblock %}
+{% block content %}
+
+<h2 style="text-align: center; margin-bottom: 30px;">Your Feed</h2>
+
+{% if user.is_authenticated %}
+    {% if posts %}
+        {% for post in posts %}
+            <div style="max-width: 600px; margin: 20px auto; padding: 15px; border: 1px solid #ccc; border-radius: 8px;">
+                <p><strong><a href="{% url 'profile' post.user.username %}" style="text-decoration: none; color: #007bff;">{{ post.user.username }}</a></strong></p>
+                <p>{{ post.caption }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post image" style="max-width: 100%; margin-top: 10px;">
+                {% endif %}
+                <small>Posted on {{ post.created_at|date:"F d, Y" }}</small><br>
+                <a href="{% url 'post_detail' post.id %}" style="color: #28a745;">💬 View Post</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center;">You are not following anyone yet, or no posts to show.</p>
+    {% endif %}
+{% else %}
+    <div style="text-align: center; padding: 50px;">
+        <h1>Welcome to the Social Media App</h1>
+        <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'signup' %}">Sign up</a> to get started.</p>
+    </div>
+{% endif %}
+
+{% endblock %}

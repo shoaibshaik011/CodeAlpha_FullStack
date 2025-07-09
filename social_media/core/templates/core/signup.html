@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up for Flutterly{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <h2>Join Flutterly 🦋</h2>
+  <p>Create your account and start fluttering...</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Sign Up</button>
+  </form>
+  <p class="login-footer">Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
+</div>
+{% endblock %}
